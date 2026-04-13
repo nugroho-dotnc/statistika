@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modul UTS Probabilitas & Statistika 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f7f2;
+  --paper: #fffef9;
+  --ink: #1a1a2e;
+  --muted: #6b6b7b;
+  --border: #e2e0d5;
+  --accent: #d4380d;
+  --accent2: #1677ff;
+  --accent3: #52c41a;
+  --accent4: #722ed1;
+  --yellow: #faad14;
+  --surface: #f0ede4;
+  --formula-bg: #1a1a2e;
+  --formula-text: #93c5fd;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  color: #f0ede4;
+  padding: 48px 32px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: 'UTS';
+  position: absolute;
+  right: -10px; top: -20px;
+  font-size: 200px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.03);
+  pointer-events: none;
+  line-height: 1;
+}
+.hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+.exam-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 4px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-size: clamp(24px, 4vw, 42px);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.hero-sub { color: #9ca3af; font-size: 15px; margin-bottom: 28px; }
+.exam-info-bar {
+  display: flex; gap: 28px; flex-wrap: wrap;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+.ei-item { display: flex; flex-direction: column; }
+.ei-label { font-size: 10px; color: #6b7280; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+.ei-val { font-size: 14px; font-weight: 700; color: #f3f4f6; }
+
+/* ── KISI GRID ── */
+.kisi-section {
+  max-width: 860px; margin: 0 auto;
+  padding: 28px 32px 0;
+}
+.kisi-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.kisi-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.kisi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+.kisi-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+}
+.kisi-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── NAV ── */
+.toc {
+  max-width: 860px; margin: 20px auto 0;
+  padding: 0 32px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.toc a {
+  text-decoration: none;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  font-size: 13px; font-weight: 600;
+  padding: 6px 14px; border-radius: 6px;
+  transition: all 0.15s;
+}
+.toc a:hover { background: var(--ink); color: white; border-color: var(--ink); }
+
+/* ── WRAPPER ── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 32px 80px; }
+
+/* ── SECTION HEADER ── */
+.sec-header {
+  margin-top: 48px; margin-bottom: 24px;
+  display: flex; align-items: flex-start; gap: 16px;
+}
+.sec-num {
+  font-family: 'Fira Code', monospace;
+  font-size: 11px; font-weight: 600;
+  padding: 4px 10px; border-radius: 4px;
+  margin-top: 4px; white-space: nowrap;
+}
+.sec-num.red { background: #fff1f0; color: var(--accent); border: 1px solid #ffa39e; }
+.sec-num.blue { background: #e6f4ff; color: var(--accent2); border: 1px solid #91caff; }
+.sec-num.green { background: #f6ffed; color: var(--accent3); border: 1px solid #b7eb8f; }
+.sec-num.purple { background: #f9f0ff; color: var(--accent4); border: 1px solid #d3adf7; }
+.sec-num.orange { background: #fff7e6; color: #d46b08; border: 1px solid #ffd591; }
+
+.sec-header h2 { font-size: 26px; font-weight: 800; line-height: 1.2; }
+
+/* ── CONTENT BLOCKS ── */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  font-size: 15px; font-weight: 700;
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.card h3::before {
+  content: '';
+  width: 4px; height: 16px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.red-card h3::before { background: var(--accent); }
+.blue-card h3::before { background: var(--accent2); }
+.green-card h3::before { background: var(--accent3); }
+.purple-card h3::before { background: var(--accent4); }
+.orange-card h3::before { background: #d46b08; }
+
+p.body { font-size: 14px; color: #374151; line-height: 1.8; margin-bottom: 10px; }
+
+/* ── FORMULA BOX ── */
+.formula {
+  background: var(--formula-bg);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+}
+.formula-tag {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: #6b7280; margin-bottom: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.formula-main {
+  font-family: 'Fira Code', monospace;
+  font-size: 14px; font-weight: 500;
+  color: var(--formula-text);
+  line-height: 1.6;
+}
+.formula-note {
+  font-size: 12px; color: #9ca3af;
+  margin-top: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── TABLE ── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+.tbl th {
+  background: var(--surface); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  padding: 9px 12px; text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.tbl td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: #374151; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: #fafaf7; }
+
+/* ── LIST ── */
+ul.blist, ol.blist { padding-left: 20px; margin: 8px 0 12px; }
+ul.blist li, ol.blist li { font-size: 14px; color: #374151; margin-bottom: 5px; line-height: 1.7; }
+ul.blist li::marker { color: var(--accent); }
+ol.blist li::marker { color: var(--accent2); font-weight: 700; }
+
+/* ── HIGHLIGHT BOXES ── */
+.hl-box {
+  border-radius: 8px; padding: 14px 18px;
+  margin: 12px 0; font-size: 14px; line-height: 1.75;
+}
+.hl-red { background: #fff1f0; border-left: 4px solid var(--accent); color: #7f1d1d; }
+.hl-blue { background: #eff6ff; border-left: 4px solid var(--accent2); color: #1e3a5f; }
+.hl-green { background: #f0fdf4; border-left: 4px solid var(--accent3); color: #14532d; }
+.hl-yellow { background: #fffbeb; border-left: 4px solid var(--yellow); color: #78350f; }
+.hl-purple { background: #faf5ff; border-left: 4px solid var(--accent4); color: #3b0764; }
+
+/* ── CONTOH BOX ── */
+.example {
+  background: #f9fafb;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 12px 0;
+}
+.example-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+}
+.example p { font-size: 13px; color: #374151; margin: 4px 0; line-height: 1.7; }
+
+/* ── STEP FLOW ── */
+.steps { counter-reset: step; margin: 12px 0; }
+.step {
+  display: flex; gap: 14px; margin-bottom: 12px;
+  align-items: flex-start;
+}
+.step-num {
+  counter-increment: step;
+  width: 28px; height: 28px;
+  background: var(--ink); color: white;
+  font-size: 12px; font-weight: 700;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.step-content { font-size: 14px; color: #374151; line-height: 1.7; }
+.step-content strong { color: var(--ink); }
+
+/* ── TWO COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+@media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+/* ── SOAL SECTION ── */
+.soal-hero {
+  background: var(--ink);
+  color: white;
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-top: 48px; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 20px;
+}
+.soal-hero-text h2 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.soal-hero-text p { font-size: 13px; color: #9ca3af; }
+.soal-badge {
+  background: var(--accent);
+  color: white;
+  font-size: 28px; font-weight: 800;
+  width: 60px; height: 60px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── PILGAN ── */
+.pg-grid { display: grid; gap: 14px; margin-bottom: 32px; }
+.pg-item {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+.pg-num {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 8px;
+  font-family: 'Fira Code', monospace;
+}
+.pg-q { font-size: 14px; font-weight: 600; line-height: 1.6; margin-bottom: 12px; }
+.pg-opts { display: grid; gap: 6px; }
+.pg-opt {
+  font-size: 13px; color: #374151;
+  padding: 7px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  user-select: none;
+}
+.pg-opt:hover { background: #e8e6dc; }
+.pg-opt.selected { background: #dbeafe; border-color: #93c5fd; color: #1e40af; font-weight: 600; }
+.pg-opt.correct { background: #dcfce7; border-color: #86efac; color: #166534; font-weight: 600; }
+.pg-opt.wrong { background: #fee2e2; border-color: #fca5a5; color: #991b1b; }
+
+/* Answer reveal */
+.pg-answer { display: none; margin-top: 10px; }
+.pg-answer.show { display: block; }
+.pg-answer-inner {
+  background: #f0fdf4; border: 1px solid #86efac;
+  border-radius: 6px; padding: 8px 12px;
+  font-size: 13px; color: #166534;
+}
+
+/* Check button */
+.check-btn {
+  background: var(--ink); color: white;
+  border: none; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  padding: 10px 24px; border-radius: 7px;
+  margin-top: 8px; transition: background 0.15s;
+}
+.check-btn:hover { background: #374151; }
+
+/* ── ESSAY SECTION ── */
+.essay-grid { display: grid; gap: 20px; }
+.essay-item {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.essay-header {
+  background: var(--surface);
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.essay-num {
+  background: var(--ink); color: white;
+  font-size: 12px; font-weight: 800;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.essay-topic { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.essay-body { padding: 18px 20px; }
+.essay-q { font-size: 14px; font-weight: 600; line-height: 1.65; margin-bottom: 16px; }
+
+.answer-area {
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 13px; color: #374151;
+  line-height: 1.7;
+}
+.answer-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--accent3); margin-bottom: 8px;
+}
+.answer-tag.hide-ans { color: var(--muted); }
+
+.toggle-answer {
+  background: none; border: 1px solid var(--border);
+  cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  padding: 6px 14px; border-radius: 6px;
+  margin-top: 10px; transition: all 0.15s;
+}
+.toggle-answer:hover { border-color: var(--accent2); color: var(--accent2); }
+
+.hidden-answer { display: none; }
+.hidden-answer.visible { display: block; }
+
+/* ── SCORE BOX ── */
+.score-section {
+  background: var(--ink); color: white;
+  border-radius: 12px; padding: 24px 28px;
+  margin-top: 32px; text-align: center;
+}
+.score-section h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+.score-section p { color: #9ca3af; font-size: 14px; margin-bottom: 16px; }
+.score-display {
+  font-size: 48px; font-weight: 800;
+  color: var(--accent); margin: 12px 0;
+  font-family: 'Fira Code', monospace;
+}
+.calc-btn {
+  background: white; color: var(--ink);
+  border: none; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  padding: 12px 28px; border-radius: 8px;
+  transition: opacity 0.15s;
+}
+.calc-btn:hover { opacity: 0.85; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 28px 16px;
+  color: var(--muted); font-size: 12px;
+  border-top: 1px solid var(--border);
+}
+footer strong { color: var(--ink); }
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .hero{padding:32px 20px 28px;}
+  .wrap,.kisi-section,.toc{padding-left:16px;padding-right:16px;}
+  .exam-info-bar{gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="exam-badge">📋 Modul Persiapan UTS</div>
+    <h1>Probabilitas &amp; Statistika</h1>
+    <p class="hero-sub">Berdasarkan Buku Ajar TIK 2020 — Politeknik Negeri Jakarta</p>
+    <div class="exam-info-bar">
+      <div class="ei-item"><span class="ei-label">📅 Tanggal</span><span class="ei-val">Selasa, 14 April 2026</span></div>
+      <div class="ei-item"><span class="ei-label">📍 Tempat</span><span class="ei-val">Perpustakaan Lt. 8</span></div>
+      <div class="ei-item"><span class="ei-label">⏰ Waktu</span><span class="ei-val">13:00 – 14:30 WIB</span></div>
+      <div class="ei-item"><span class="ei-label">📝 Soal</span><span class="ei-val">25 PG + 5 Essay</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- KISI-KISI -->
+<div class="kisi-section">
+  <div class="kisi-title">Kisi-kisi Essay</div>
+  <div class="kisi-grid">
+    <div class="kisi-card"><span class="kisi-dot" style="background:#d4380d"></span>Distribusi Normal (2 soal)</div>
+    <div class="kisi-card"><span class="kisi-dot" style="background:#722ed1"></span>Distribusi Gamma (1 soal)</div>
+    <div class="kisi-card"><span class="kisi-dot" style="background:#1677ff"></span>Pengertian Statistik (1 soal)</div>
+    <div class="kisi-card"><span class="kisi-dot" style="background:#52c41a"></span>Peluang / Probabilitas (1 soal)</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="toc">
+  <a href="#distribusi-frekuensi">📊 Distribusi Frekuensi</a>
+  <a href="#peluang">🎲 Peluang</a>
+  <a href="#dist-normal">📈 Distribusi Normal</a>
+  <a href="#dist-gamma">Γ Distribusi Gamma</a>
+  <a href="#soal-pg">✏️ Latihan PG</a>
+  <a href="#soal-essay">📋 Latihan Essay</a>
+</nav>
+
+<div class="wrap">
+
+<!-- ══════════════════════════════════
+     BAGIAN 1 — DISTRIBUSI FREKUENSI
+═══════════════════════════════════ -->
+<div id="distribusi-frekuensi">
+  <div class="sec-header">
+    <span class="sec-num red">01</span>
+    <div>
+      <h2>Distribusi Frekuensi</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px;">Bab 2 — Deskriptif Statistik</p>
+    </div>
+  </div>
+
+  <!-- Pengertian Statistik (kisi-kisi essay) -->
+  <div class="card red-card">
+    <h3>⭐ Pengertian Statistika (Kisi Essay)</h3>
+    <p class="body"><strong>Statistika</strong> adalah ilmu yang mempelajari cara <em>mengumpulkan, mengolah, menyajikan, menganalisis data</em>, membuat kesimpulan, dan mengambil keputusan berdasarkan hasil analisis data tersebut.</p>
+    <p class="body"><strong>Statistika Deskriptif</strong> adalah bagian statistika yang hanya mengolah dan menyajikan data tanpa menarik kesimpulan untuk populasi yang lebih besar. Cakupannya meliputi: distribusi frekuensi, ukuran pemusatan, ukuran dispersi, dan grafik.</p>
+    <div class="two-col">
+      <div class="hl-blue">
+        <strong>Statistik</strong> = data/informasi itu sendiri (hasil penerapan algoritma pada data).
+      </div>
+      <div class="hl-green">
+        <strong>Statistika</strong> = ilmu yang mempelajari metode pengolahan data.
+      </div>
+    </div>
+    <p class="body">Tiga hal penting dalam statistika: <strong>(1)</strong> Data historis (nilai numerik masa lampau), <strong>(2)</strong> Kriteria keputusan (berbagai pilihan dengan manfaat & konsekuensi), <strong>(3)</strong> Pengambilan keputusan (penerapan nyata di dunia pendidikan, bisnis, dll).</p>
+  </div>
+
+  <!-- Distribusi Frekuensi -->
+  <div class="card red-card">
+    <h3>Distribusi Frekuensi Berkelompok</h3>
+    <p class="body">Dibuat ketika data cukup banyak sehingga penyajian biasa tidak efisien. Data dikelompokkan ke dalam <strong>kelas-kelas interval</strong> beserta frekuensinya.</p>
+
+    <div class="formula">
+      <div class="formula-tag">Rumus Sturges — menentukan jumlah kelas (K)</div>
+      <div class="formula-main">K = 1 + 3,3 · log(n)</div>
+      <div class="formula-note">n = jumlah data. Contoh: n=150 → K = 1 + 3,3 × log(150) = 1 + 3,3 × 2,18 ≈ 8 atau 9</div>
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Panjang Kelas (interval kelas)</div>
+      <div class="formula-main">I = Rentang / K = (data_max − data_min + 1) / K</div>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Tentukan jumlah kelas (K)</strong> menggunakan rumus Sturges atau pengalaman (6–15 kelas).</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Hitung rentang</strong> = data terbesar − data terkecil + 1.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Hitung panjang kelas</strong> = Rentang ÷ K. Bulatkan ke atas bila perlu.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Susun interval kelas</strong> mulai dari nilai terkecil (bisa dibulatkan agar komunikatif).</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Masukkan data dengan tally</strong> — coret setiap data yang sudah masuk ke kelasnya.</div></div>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Nilai 150 Mahasiswa</div>
+      <p>n=150, data min=13, max=93 → K = 1+3,3×log(150) ≈ 9, Rentang = 93−13+1 = 81, Panjang Kelas = 81/9 = 9 (digunakan 10 agar komunikatif, mulai dari 10)</p>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>No</th><th>Kelas Interval</th><th>Frekuensi (f)</th><th>Frekuensi Kumulatif</th><th>Frekuensi Relatif (%)</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>10 – 19</td><td>1</td><td>1</td><td>0,67</td></tr>
+        <tr><td>2</td><td>20 – 29</td><td>6</td><td>7</td><td>4,00</td></tr>
+        <tr><td>3</td><td>30 – 39</td><td>9</td><td>16</td><td>6,00</td></tr>
+        <tr><td>4</td><td>40 – 49</td><td>31</td><td>47</td><td>20,67</td></tr>
+        <tr><td>5</td><td>50 – 59</td><td>42</td><td>89</td><td>28,00</td></tr>
+        <tr><td>6</td><td>60 – 69</td><td>32</td><td>121</td><td>21,33</td></tr>
+        <tr><td>7</td><td>70 – 79</td><td>17</td><td>138</td><td>11,33</td></tr>
+        <tr><td>8</td><td>80 – 89</td><td>10</td><td>148</td><td>6,67</td></tr>
+        <tr><td>9</td><td>90 – 100</td><td>2</td><td>150</td><td>1,33</td></tr>
+        <tr><td></td><td><strong>Jumlah</strong></td><td><strong>150</strong></td><td></td><td><strong>100</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Ukuran Pemusatan -->
+  <div class="card red-card">
+    <h3>Ukuran Pemusatan Data</h3>
+
+    <div class="two-col">
+      <div>
+        <p class="body" style="font-weight:700;margin-bottom:6px">Mean (Rata-rata)</p>
+        <div class="formula">
+          <div class="formula-tag">Data Tunggal</div>
+          <div class="formula-main">x̄ = ΣX / n</div>
+        </div>
+        <div class="formula">
+          <div class="formula-tag">Data Berkelompok — Sigma</div>
+          <div class="formula-main">x̄ = Σ(fᵢ · xᵢ) / n</div>
+          <div class="formula-note">xᵢ = nilai tengah kelas</div>
+        </div>
+        <div class="formula">
+          <div class="formula-tag">Data Berkelompok — Coding</div>
+          <div class="formula-main">x̄ = x₀ + (Σfᵢcᵢ / n) · I</div>
+          <div class="formula-note">x₀ = titik tengah kelas dg frekuensi terbesar, cᵢ = kode (-2,-1,0,1,2,...)</div>
+        </div>
+        <div class="formula">
+          <div class="formula-tag">Data Berkelompok — Rata-rata Duga</div>
+          <div class="formula-main">x̄ = x₀ + Σ(fᵢ · dᵢ) / n</div>
+          <div class="formula-note">dᵢ = xᵢ − x₀</div>
+        </div>
+      </div>
+      <div>
+        <p class="body" style="font-weight:700;margin-bottom:6px">Modus (Mo)</p>
+        <div class="formula">
+          <div class="formula-tag">Data Berkelompok</div>
+          <div class="formula-main">Mo = L₀ + C · [f₁/(f₁+f₂)]</div>
+          <div class="formula-note">L₀ = batas bawah kelas modus, C = interval kelas, f₁ = selisih frek. modus dg sebelumnya, f₂ = selisih frek. modus dg sesudahnya</div>
+        </div>
+        <p class="body" style="font-weight:700;margin-top:14px;margin-bottom:6px">Median (Me)</p>
+        <div class="formula">
+          <div class="formula-tag">Data Berkelompok</div>
+          <div class="formula-main">Me = L₀ + C · [(n/2 − Σf₁)/fₘ]</div>
+          <div class="formula-note">L₀ = batas bawah kelas median, Σf₁ = jumlah frek. kelas sebelumnya, fₘ = frek. kelas median</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Modus Data Berkelompok</div>
+      <p>Data: 60–62 (f=4), 63–65 (f=10), <strong>66–68 (f=17)</strong>, 69–71 (f=9), 72–74 (f=5)</p>
+      <p>f₁ = 17−10=7, f₂ = 17−9=8, L₀ = 65,5, C = 3</p>
+      <p><strong>Mo = 65,5 + 3×[7/(7+8)] = 65,5 + 1,4 = 66,9</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BAGIAN 2 — PELUANG
+═══════════════════════════════════ -->
+<div id="peluang">
+  <div class="sec-header">
+    <span class="sec-num blue">02</span>
+    <div>
+      <h2>Peluang (Probabilitas)</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px;">Bab 3 — Kisi Essay: Peluang &amp; Probabilitas</p>
+    </div>
+  </div>
+
+  <div class="card blue-card">
+    <h3>⭐ Konsep Dasar Peluang (Kisi Essay)</h3>
+    <p class="body"><strong>Peluang</strong> adalah ukuran kemungkinan terjadinya suatu kejadian, dinyatakan dengan bilangan real p di mana 0 ≤ P(A) ≤ 1.</p>
+
+    <div class="two-col">
+      <div class="hl-blue">
+        <strong>Ruang Sampel (S)</strong>: himpunan semua kemungkinan hasil dari suatu percobaan.<br>
+        Contoh: lempar koin → S = {A, G}
+      </div>
+      <div class="hl-blue">
+        <strong>Kejadian (Event K)</strong>: himpunan bagian dari ruang sampel.<br>
+        Contoh: muncul bilangan genap dari dadu → K = {2, 4, 6}
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Peluang Suatu Kejadian (Ruang Sampel Seragam)</div>
+      <div class="formula-main">P(K) = n(K) / n(S)</div>
+      <div class="formula-note">n(K) = banyak hasil yang memenuhi kejadian K, n(S) = banyak semua hasil yang mungkin</div>
+    </div>
+
+    <div class="hl-yellow">
+      <strong>Sifat Peluang:</strong><br>
+      (1) 0 ≤ P(A) ≤ 1 untuk setiap kejadian A<br>
+      (2) P(S) = 1 (jumlah seluruh peluang = 1)<br>
+      (3) P(∅) = 0 (peluang kejadian mustahil = 0)
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh</div>
+      <p>Dua koin dilempar. Ruang sampel: S = {(G,G),(G,A),(A,G),(A,A)}, n(S)=4</p>
+      <p>Kejadian K = muncul tepat satu gambar = {(G,A),(A,G)}, n(K)=2</p>
+      <p><strong>P(K) = 2/4 = 0,5</strong></p>
+    </div>
+  </div>
+
+  <div class="card blue-card">
+    <h3>Aturan Peluang</h3>
+    <div class="two-col">
+      <div class="formula">
+        <div class="formula-tag">Aturan Penjumlahan (Umum)</div>
+        <div class="formula-main">P(A∪B) = P(A)+P(B)−P(A∩B)</div>
+        <div class="formula-note">Jika A dan B saling lepas (mutually exclusive):<br>P(A∪B) = P(A) + P(B)</div>
+      </div>
+      <div class="formula">
+        <div class="formula-tag">Aturan Perkalian (Umum)</div>
+        <div class="formula-main">P(A∩B) = P(A) · P(B|A)</div>
+        <div class="formula-note">Jika A dan B saling bebas (independent):<br>P(A∩B) = P(A) · P(B)</div>
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Peluang Bersyarat</div>
+      <div class="formula-main">P(A|B) = P(A∩B) / P(B),  P(B)≠0</div>
+      <div class="formula-note">Peluang terjadinya A, diketahui B sudah terjadi</div>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Peluang Bersyarat</div>
+      <p>Perusahaan Highfly: P(pesanan siap dikirim tepat waktu R) = 0,80</p>
+      <p>P(pesanan siap DAN sampai tepat waktu, R∩D) = 0,72</p>
+      <p>P(sampai tepat waktu | sudah siap) = P(R∩D)/P(R) = 0,72/0,80 = <strong>0,90</strong></p>
+    </div>
+  </div>
+
+  <div class="card blue-card">
+    <h3>Permutasi &amp; Kombinasi</h3>
+
+    <div class="two-col">
+      <div>
+        <p class="body" style="font-weight:700">Permutasi (urutan diperhatikan)</p>
+        <div class="formula">
+          <div class="formula-tag">P(n,r) — r dari n unsur berbeda</div>
+          <div class="formula-main">P(n,r) = n! / (n−r)!</div>
+        </div>
+        <div class="formula">
+          <div class="formula-tag">Semua n unsur berbeda</div>
+          <div class="formula-main">Pₙ = n!</div>
+        </div>
+        <div class="formula">
+          <div class="formula-tag">Ada unsur yang sama (k kelompok)</div>
+          <div class="formula-main">P = n! / (n₁! · n₂! · ... · nₖ!)</div>
+        </div>
+      </div>
+      <div>
+        <p class="body" style="font-weight:700">Kombinasi (urutan tidak diperhatikan)</p>
+        <div class="formula">
+          <div class="formula-tag">C(n,r) — memilih r dari n</div>
+          <div class="formula-main">C(n,r) = n! / [r! · (n−r)!]</div>
+          <div class="formula-note">0! = 1</div>
+        </div>
+        <div class="hl-yellow" style="margin-top:12px;font-size:13px">
+          <strong>Perbedaan utama:</strong><br>
+          Permutasi: AB ≠ BA (urutan beda = beda susunan)<br>
+          Kombinasi: AB = BA (urutan tidak dipedulikan)
+        </div>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Kombinasi</div>
+      <p>5 bab buku, ingin baca 3 bab saja. Berapa cara?</p>
+      <p>C(5,3) = 5! / (3! × 2!) = 120 / (6×2) = <strong>10 cara</strong></p>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Permutasi</div>
+      <p>Dari 8 RW, 2 RW dipilih untuk bertanding (urutan penting: kandang/tandang). Berapa cara?</p>
+      <p>P(8,2) = 8! / (8−2)! = 8×7 = <strong>56 cara</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BAGIAN 3 — DISTRIBUSI NORMAL
+═══════════════════════════════════ -->
+<div id="dist-normal">
+  <div class="sec-header">
+    <span class="sec-num green">03</span>
+    <div>
+      <h2>Distribusi Normal</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px;">Bab 5 — Kisi Essay: 2 Soal (Tabel Z)</p>
+    </div>
+  </div>
+
+  <div class="card green-card">
+    <h3>⭐ Pengertian &amp; Ciri-ciri</h3>
+    <p class="body"><strong>Distribusi Normal (Gaussian)</strong> adalah distribusi probabilitas yang paling banyak digunakan dalam statistika. Grafik fungsi kepadatan probabilitasnya berbentuk <em>kurva lonceng (bell curve)</em>.</p>
+
+    <div class="hl-green">
+      <strong>Ciri-ciri Distribusi Normal:</strong><br>
+      a. Kurva berbentuk garis lengkung halus seperti genta/lonceng<br>
+      b. <strong>Simetris</strong> terhadap rata-rata (mean) μ<br>
+      c. Kedua ekor mendekati sumbu-x tapi tidak pernah menyentuh (asimtot)<br>
+      d. Jarak titik belok dari sumbu simetris = σ (simpangan baku)<br>
+      e. Luas total di bawah kurva = 1 (100%)
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Fungsi Kepadatan Probabilitas Normal X ~ N(μ, σ²)</div>
+      <div class="formula-main">f(x; μ, σ) = (1 / σ√2π) · e^[−(x−μ)² / 2σ²]</div>
+      <div class="formula-note">μ = rata-rata, σ = simpangan baku, π ≈ 3.14159, e ≈ 2.71828</div>
+    </div>
+
+    <div class="two-col">
+      <div class="hl-blue" style="font-size:13px">
+        <strong>Aturan Empiris (68-95-99.7):</strong><br>
+        • μ ± 1σ → sekitar 68% data<br>
+        • μ ± 2σ → sekitar 95% data<br>
+        • μ ± 3σ → sekitar 99,7% data
+      </div>
+      <div class="hl-yellow" style="font-size:13px">
+        <strong>Parameter:</strong><br>
+        • Notasi: X ~ N(μ, σ²)<br>
+        • Mean = Median = Modus = μ<br>
+        • Varian = σ²
+      </div>
+    </div>
+  </div>
+
+  <div class="card green-card">
+    <h3>⭐ Distribusi Normal Baku (Z) &amp; Tabel Z</h3>
+    <p class="body">Karena integral distribusi normal tidak bisa diselesaikan secara analitis, digunakan <strong>Distribusi Normal Baku Z ~ N(0, 1)</strong> dengan mean=0 dan σ=1.</p>
+
+    <div class="formula">
+      <div class="formula-tag">Transformasi ke Z (Standardisasi)</div>
+      <div class="formula-main">Z = (X − μ) / σ</div>
+      <div class="formula-note">Nilai Z dari tabel adalah P(Z &lt; z₀) = luas area dari −∞ sampai z₀</div>
+    </div>
+
+    <div class="hl-red" style="margin-bottom:12px">
+      <strong>⚠️ Ingat saat baca tabel Z:</strong> Tabel memberikan P(Z &lt; z₀) — yaitu luas di sebelah KIRI dari z₀. Untuk P(Z &gt; z₀) = 1 − P(Z &lt; z₀).
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Yang Dicari</th><th>Rumus</th><th>Contoh</th></tr></thead>
+      <tbody>
+        <tr><td>P(Z &lt; z₀)</td><td>Langsung baca tabel</td><td>P(Z &lt; 1.84) = 0,9671</td></tr>
+        <tr><td>P(Z &gt; z₀)</td><td>1 − P(Z &lt; z₀)</td><td>P(Z &gt; 1.84) = 1 − 0,9671 = 0,0329</td></tr>
+        <tr><td>P(a &lt; Z &lt; b)</td><td>P(Z &lt; b) − P(Z &lt; a)</td><td>P(−1.97 &lt; Z &lt; 0.86) = 0,8051 − 0,0244 = 0,7807</td></tr>
+        <tr><td>P(Z &lt; −z₀)</td><td>1 − P(Z &lt; z₀)</td><td>P(Z &lt; −1.25) = 1 − P(Z &lt; 1.25) = 1 − 0,8944 = 0,1056</td></tr>
+      </tbody>
+    </table>
+
+    <div class="example">
+      <div class="example-tag">Contoh Lengkap — Tabel Z (dari buku)</div>
+      <p>Umur bola lampu terdistribusi normal, μ = 800 jam, σ = 40 jam.</p>
+      <p><strong>(a) P(778 &lt; X &lt; 834) = ?</strong></p>
+      <p>z₁ = (778−800)/40 = −0,55 → P(Z &lt; −0,55) = 0,2912</p>
+      <p>z₂ = (834−800)/40 = 0,85 → P(Z &lt; 0,85) = 0,8023</p>
+      <p>P(778 &lt; X &lt; 834) = 0,8023 − 0,2912 = <strong>0,5111</strong></p>
+      <div class="divider"></div>
+      <p><strong>(b) P(X &lt; 750 atau X &gt; 900) = ?</strong></p>
+      <p>z₁ = (750−800)/40 = −1,25 → P(Z &lt; −1,25) = 0,1056</p>
+      <p>z₂ = (900−800)/40 = 2,5 → P(Z &gt; 2,5) = 1 − 0,9938 = 0,0062</p>
+      <p>P = 0,1056 + 0,0062 = <strong>0,1118</strong></p>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Mencari Nilai z</div>
+      <p><strong>(a)</strong> P(Z &gt; k) = 0,3015 → P(Z &lt; k) = 1 − 0,3015 = 0,6985 → dari tabel: <strong>k = 0,52</strong></p>
+      <p><strong>(b)</strong> P(k &lt; Z &lt; −0,18) = 0,4197 → P(Z &lt; −0,18) = 0,4286</p>
+      <p>0,4286 − P(Z &lt; k) = 0,4197 → P(Z &lt; k) = 0,0089 → dari tabel: <strong>k = −2,37</strong></p>
+    </div>
+  </div>
+
+  <div class="card green-card">
+    <h3>Aproksimasi Normal terhadap Distribusi Binomial</h3>
+    <p class="body">Bila n cukup besar dan np ≥ 5 serta nq ≥ 5 (q = 1−p), distribusi Binomial dapat didekati oleh distribusi Normal.</p>
+    <div class="formula">
+      <div class="formula-tag">Rumus Aproksimasi</div>
+      <div class="formula-main">Z = (X − np) / √(npq)</div>
+      <div class="formula-note">Gunakan koreksi kontinyuitas ±0,5 untuk keakuratan lebih baik</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     BAGIAN 4 — DISTRIBUSI GAMMA
+═══════════════════════════════════ -->
+<div id="dist-gamma">
+  <div class="sec-header">
+    <span class="sec-num purple">04</span>
+    <div>
+      <h2>Distribusi Gamma</h2>
+      <p style="color:var(--muted);font-size:14px;margin-top:4px;">Distribusi Kontinu — Kisi Essay: 1 Soal (Tabel Gamma)</p>
+    </div>
+  </div>
+
+  <div class="card purple-card">
+    <h3>⭐ Fungsi Gamma &amp; Distribusi Gamma</h3>
+    <p class="body"><strong>Distribusi Gamma</strong> adalah distribusi peluang kontinu yang digunakan untuk memodelkan waktu tunggu hingga suatu kejadian terjadi sebanyak α kali, atau data yang menjulur ke kanan (positively skewed). Ini adalah generalisasi dari distribusi Eksponensial.</p>
+
+    <div class="formula">
+      <div class="formula-tag">Fungsi Gamma — Γ(α)</div>
+      <div class="formula-main">Γ(α) = ∫₀^∞ x^(α−1) · e^(−x) dx,  α &gt; 0</div>
+      <div class="formula-note">Sifat penting: Γ(α) = (α−1) · Γ(α−1) dan Γ(n) = (n−1)! untuk n bilangan bulat positif</div>
+    </div>
+
+    <div class="two-col">
+      <div class="hl-purple" style="font-size:13px">
+        <strong>Sifat Khusus Fungsi Gamma:</strong><br>
+        • Γ(1) = 1<br>
+        • Γ(1/2) = √π<br>
+        • Γ(n) = (n−1)!  jika n ∈ ℤ⁺<br>
+        • Γ(α) = (α−1)·Γ(α−1)
+      </div>
+      <div class="hl-yellow" style="font-size:13px">
+        <strong>Contoh:</strong><br>
+        • Γ(4) = 3! = 6<br>
+        • Γ(5) = 4! = 24<br>
+        • Γ(3) = 2! = 2<br>
+        • Γ(3/2) = (1/2)·Γ(1/2) = √π/2
+      </div>
+    </div>
+  </div>
+
+  <div class="card purple-card">
+    <h3>Fungsi Kepadatan Probabilitas Gamma</h3>
+
+    <div class="formula">
+      <div class="formula-tag">PDF Distribusi Gamma X ~ Gamma(α, β)</div>
+      <div class="formula-main">f(x; α, β) = [1 / (βᵅ · Γ(α))] · x^(α−1) · e^(−x/β),  x &gt; 0</div>
+      <div class="formula-note">α = parameter bentuk (shape), β = parameter skala (scale)</div>
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Nilai Ekspektasi &amp; Varians</div>
+      <div class="formula-main">E(X) = α·β     Var(X) = α·β²</div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Parameter</th><th>Simbol</th><th>Keterangan</th></tr></thead>
+      <tbody>
+        <tr><td>Shape (bentuk)</td><td>α (alpha)</td><td>Mengontrol bentuk distribusi. α=1 → eksponensial</td></tr>
+        <tr><td>Scale (skala)</td><td>β (beta)</td><td>Mengontrol skala/penyebaran distribusi</td></tr>
+        <tr><td>Mean</td><td>μ = αβ</td><td>Nilai rata-rata distribusi</td></tr>
+        <tr><td>Varians</td><td>σ² = αβ²</td><td>Ukuran penyebaran distribusi</td></tr>
+      </tbody>
+    </table>
+
+    <div class="hl-blue">
+      <strong>Kasus Khusus Distribusi Gamma:</strong><br>
+      • Jika α = 1 → <strong>Distribusi Eksponensial</strong> dengan parameter β<br>
+      • Jika α = n/2 dan β = 2 → <strong>Distribusi Chi-Square</strong> dengan df = n<br>
+      • Jika α = bilangan bulat positif → <strong>Distribusi Erlang</strong>
+    </div>
+  </div>
+
+  <div class="card purple-card">
+    <h3>Penggunaan Tabel Gamma &amp; Cara Hitung Probabilitas</h3>
+
+    <p class="body">Untuk menghitung P(X ≤ x) pada distribusi Gamma, dilakukan <strong>transformasi ke variabel standar</strong>:</p>
+
+    <div class="formula">
+      <div class="formula-tag">Transformasi Standar</div>
+      <div class="formula-main">Y = X / β   →   Y ~ Gamma(α, 1)</div>
+      <div class="formula-note">Lalu gunakan tabel distribusi Gamma kumulatif dengan parameter α</div>
+    </div>
+
+    <div class="formula">
+      <div class="formula-tag">Fungsi Gamma Tidak Lengkap (untuk tabel)</div>
+      <div class="formula-main">P(X ≤ x) = γ(α, x/β) / Γ(α)</div>
+      <div class="formula-note">γ(α, u) = ∫₀ᵘ t^(α−1)·e^(−t) dt  adalah fungsi gamma tidak lengkap</div>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Distribusi Gamma</div>
+      <p>Waktu pelayanan pelanggan X ~ Gamma(α=2, β=3 menit).</p>
+      <p>Hitung: rata-rata, varians, dan P(X ≤ 6).</p>
+      <p><strong>E(X)</strong> = α·β = 2 × 3 = <strong>6 menit</strong></p>
+      <p><strong>Var(X)</strong> = α·β² = 2 × 9 = <strong>18 menit²</strong></p>
+      <p>Untuk P(X ≤ 6): transformasi Y = X/β = X/3, sehingga P(Y ≤ 2) dengan Y ~ Gamma(2,1)</p>
+      <p>Dari tabel Gamma atau hitung: P(Y ≤ 2) = 1 − e⁻² (1 + 2) = 1 − 3e⁻² ≈ 1 − 0,406 = <strong>0,594</strong></p>
+    </div>
+
+    <div class="example">
+      <div class="example-tag">Contoh — Menghitung E(X) dan Var(X)</div>
+      <p>X ~ Gamma(α=3, β=4). Cari E(X), Var(X), dan P(X &gt; 0).</p>
+      <p><strong>E(X)</strong> = α·β = 3 × 4 = <strong>12</strong></p>
+      <p><strong>Var(X)</strong> = α·β² = 3 × 16 = <strong>48</strong></p>
+      <p><strong>P(X &gt; 0)</strong> = 1 (karena distribusi Gamma hanya terdefinisi untuk x &gt; 0)</p>
+    </div>
+
+    <div class="hl-red">
+      <strong>Tips Tabel Gamma untuk UTS:</strong><br>
+      Tabel Gamma biasanya menampilkan P(X ≤ x) atau nilai fungsi Gamma Γ(α). Pastikan:<br>
+      1. Tentukan parameter α dan β dari soal<br>
+      2. Transformasi x → y = x/β sebelum melihat tabel<br>
+      3. Hitung Γ(n) = (n−1)! untuk n bilangan bulat<br>
+      4. Gunakan sifat Γ(α) = (α−1)·Γ(α−1) jika α bukan bilangan bulat
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SOAL LATIHAN PG
+═══════════════════════════════════ -->
+<div id="soal-pg">
+  <div class="soal-hero">
+    <div class="soal-badge">✏️</div>
+    <div class="soal-hero-text">
+      <h2>Latihan Soal — Pilihan Ganda</h2>
+      <p>25 soal · Klik pilihan → klik "Cek Jawaban" untuk melihat jawaban benar</p>
+    </div>
+  </div>
+
+  <div class="pg-grid" id="pg-container">
+
+    <!-- SOAL 1 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 01 — Pengertian Statistik</div>
+      <div class="pg-q">Ilmu yang mempelajari cara mengumpulkan, mengolah, menyajikan, menganalisis data, serta menarik kesimpulan disebut...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Matematika</div>
+        <div class="pg-opt" data-val="B">B. Statistika</div>
+        <div class="pg-opt" data-val="C">C. Statistik</div>
+        <div class="pg-opt" data-val="D">D. Probabilitas</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — Statistika adalah ilmunya, sedangkan statistik adalah datanya.</div></div>
+    </div>
+
+    <!-- SOAL 2 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 02 — Distribusi Frekuensi</div>
+      <div class="pg-q">Rumus Sturges untuk menentukan jumlah kelas K adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. K = 1 + 2,3 log n</div>
+        <div class="pg-opt" data-val="B">B. K = 3,3 log n</div>
+        <div class="pg-opt" data-val="C">C. K = 1 + 3,3 log n</div>
+        <div class="pg-opt" data-val="D">D. K = 1 + log n</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — K = 1 + 3,3 log n (Rumus Sturges)</div></div>
+    </div>
+
+    <!-- SOAL 3 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 03 — Distribusi Frekuensi</div>
+      <div class="pg-q">Jika terdapat 100 data, maka jumlah kelas menurut Sturges adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 7 atau 8</div>
+        <div class="pg-opt" data-val="B">B. 10 atau 11</div>
+        <div class="pg-opt" data-val="C">C. 5 atau 6</div>
+        <div class="pg-opt" data-val="D">D. 12 atau 13</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — K = 1 + 3,3 × log(100) = 1 + 3,3 × 2 = 7,6 ≈ 7 atau 8</div></div>
+    </div>
+
+    <!-- SOAL 4 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 04 — Pemusatan Data</div>
+      <div class="pg-q">Nilai yang paling sering muncul dalam suatu data disebut...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Mean</div>
+        <div class="pg-opt" data-val="B">B. Modus</div>
+        <div class="pg-opt" data-val="C">C. Median</div>
+        <div class="pg-opt" data-val="D">D. Kuartil</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — Modus (Mo) adalah nilai yang paling banyak/sering muncul.</div></div>
+    </div>
+
+    <!-- SOAL 5 -->
+    <div class="pg-item" data-answer="D">
+      <div class="pg-num">Soal 05 — Pemusatan Data</div>
+      <div class="pg-q">Rumus median data berkelompok adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Me = L₀ + C·[f₁/(f₁+f₂)]</div>
+        <div class="pg-opt" data-val="B">B. Me = L₀ + C·[(n−Σf₁)/fₘ]</div>
+        <div class="pg-opt" data-val="C">C. Me = (n+1)/2</div>
+        <div class="pg-opt" data-val="D">D. Me = L₀ + C·[(n/2−Σf₁)/fₘ]</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: D — Median berkelompok: Me = L₀ + C·[(n/2−Σf₁)/fₘ]. Pilihan A adalah rumus modus.</div></div>
+    </div>
+
+    <!-- SOAL 6 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 06 — Peluang</div>
+      <div class="pg-q">Sebuah dadu dilempar sekali. Peluang muncul bilangan genap adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 1/6</div>
+        <div class="pg-opt" data-val="B">B. 2/6</div>
+        <div class="pg-opt" data-val="C">C. 3/6</div>
+        <div class="pg-opt" data-val="D">D. 4/6</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — Bilangan genap: {2,4,6}, n(K)=3, n(S)=6. P = 3/6 = 1/2.</div></div>
+    </div>
+
+    <!-- SOAL 7 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 07 — Peluang</div>
+      <div class="pg-q">Jika P(A) = 0,4 dan P(B) = 0,3 dan A, B saling lepas (mutually exclusive), maka P(A∪B) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 0,12</div>
+        <div class="pg-opt" data-val="B">B. 0,70</div>
+        <div class="pg-opt" data-val="C">C. 0,58</div>
+        <div class="pg-opt" data-val="D">D. 0,10</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — Saling lepas: P(A∪B) = P(A)+P(B) = 0,4+0,3 = 0,70</div></div>
+    </div>
+
+    <!-- SOAL 8 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 08 — Peluang</div>
+      <div class="pg-q">Berapa banyak cara memilih 3 orang dari 5 orang untuk menjadi panitia (urutan tidak penting)?</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 10</div>
+        <div class="pg-opt" data-val="B">B. 60</div>
+        <div class="pg-opt" data-val="C">C. 20</div>
+        <div class="pg-opt" data-val="D">D. 120</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — C(5,3) = 5!/(3!×2!) = 120/12 = 10</div></div>
+    </div>
+
+    <!-- SOAL 9 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 09 — Peluang</div>
+      <div class="pg-q">Berapa banyak susunan 3 huruf berbeda dari huruf A, B, C, D (urutan penting)?</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 12</div>
+        <div class="pg-opt" data-val="B">B. 4</div>
+        <div class="pg-opt" data-val="C">C. 24</div>
+        <div class="pg-opt" data-val="D">D. 6</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — P(4,3) = 4!/(4−3)! = 24/1 = 24</div></div>
+    </div>
+
+    <!-- SOAL 10 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 10 — Peluang Bersyarat</div>
+      <div class="pg-q">Jika P(A∩B) = 0,30 dan P(B) = 0,50, maka P(A|B) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 0,15</div>
+        <div class="pg-opt" data-val="B">B. 0,60</div>
+        <div class="pg-opt" data-val="C">C. 0,80</div>
+        <div class="pg-opt" data-val="D">D. 0,20</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — P(A|B) = P(A∩B)/P(B) = 0,30/0,50 = 0,60</div></div>
+    </div>
+
+    <!-- SOAL 11 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 11 — Distribusi Normal</div>
+      <div class="pg-q">Distribusi Normal disebut juga...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Distribusi Gauss</div>
+        <div class="pg-opt" data-val="B">B. Distribusi Student</div>
+        <div class="pg-opt" data-val="C">C. Distribusi Poisson</div>
+        <div class="pg-opt" data-val="D">D. Distribusi Binomial</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — Distribusi Normal disebut juga Distribusi Gauss.</div></div>
+    </div>
+
+    <!-- SOAL 12 -->
+    <div class="pg-item" data-answer="D">
+      <div class="pg-num">Soal 12 — Distribusi Normal</div>
+      <div class="pg-q">Rumus transformasi nilai X ke nilai Z dalam distribusi normal baku adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Z = μ/σ</div>
+        <div class="pg-opt" data-val="B">B. Z = (X + μ)/σ</div>
+        <div class="pg-opt" data-val="C">C. Z = σ/(X−μ)</div>
+        <div class="pg-opt" data-val="D">D. Z = (X − μ)/σ</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: D — Transformasi standar: Z = (X − μ)/σ</div></div>
+    </div>
+
+    <!-- SOAL 13 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 13 — Distribusi Normal</div>
+      <div class="pg-q">P(Z &gt; 1,84) = ... (diketahui P(Z &lt; 1,84) = 0,9671)</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 0,9671</div>
+        <div class="pg-opt" data-val="B">B. 0,4671</div>
+        <div class="pg-opt" data-val="C">C. 0,0329</div>
+        <div class="pg-opt" data-val="D">D. 0,5329</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — P(Z &gt; 1,84) = 1 − P(Z &lt; 1,84) = 1 − 0,9671 = 0,0329</div></div>
+    </div>
+
+    <!-- SOAL 14 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 14 — Distribusi Normal</div>
+      <div class="pg-q">Nilai X ~ N(μ=50, σ=10). Berapakah nilai Z untuk X = 65?</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Z = 0,5</div>
+        <div class="pg-opt" data-val="B">B. Z = 1,5</div>
+        <div class="pg-opt" data-val="C">C. Z = 2,0</div>
+        <div class="pg-opt" data-val="D">D. Z = −1,5</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — Z = (65−50)/10 = 15/10 = 1,5</div></div>
+    </div>
+
+    <!-- SOAL 15 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 15 — Distribusi Normal</div>
+      <div class="pg-q">Salah satu ciri distribusi Normal adalah...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Simetris terhadap mean (μ)</div>
+        <div class="pg-opt" data-val="B">B. Menjulur ke kanan</div>
+        <div class="pg-opt" data-val="C">C. Bimodal</div>
+        <div class="pg-opt" data-val="D">D. Luas kurva = 2</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — Distribusi Normal simetris sempurna terhadap mean. Luas total = 1.</div></div>
+    </div>
+
+    <!-- SOAL 16 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 16 — Distribusi Normal</div>
+      <div class="pg-q">Pada distribusi normal baku N(0,1), berapa persen data yang berada dalam rentang μ ± 2σ?</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 68%</div>
+        <div class="pg-opt" data-val="B">B. 99,7%</div>
+        <div class="pg-opt" data-val="C">C. 95%</div>
+        <div class="pg-opt" data-val="D">D. 50%</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — Aturan empiris: μ±1σ=68%, μ±2σ=95%, μ±3σ=99,7%</div></div>
+    </div>
+
+    <!-- SOAL 17 -->
+    <div class="pg-item" data-answer="D">
+      <div class="pg-num">Soal 17 — Distribusi Gamma</div>
+      <div class="pg-q">Nilai Γ(5) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 5</div>
+        <div class="pg-opt" data-val="B">B. 120</div>
+        <div class="pg-opt" data-val="C">C. 6</div>
+        <div class="pg-opt" data-val="D">D. 24</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: D — Γ(5) = (5−1)! = 4! = 24</div></div>
+    </div>
+
+    <!-- SOAL 18 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 18 — Distribusi Gamma</div>
+      <div class="pg-q">Jika X ~ Gamma(α=3, β=2), maka E(X) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 3</div>
+        <div class="pg-opt" data-val="B">B. 6</div>
+        <div class="pg-opt" data-val="C">C. 12</div>
+        <div class="pg-opt" data-val="D">D. 9</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — E(X) = α·β = 3 × 2 = 6</div></div>
+    </div>
+
+    <!-- SOAL 19 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 19 — Distribusi Gamma</div>
+      <div class="pg-q">Jika X ~ Gamma(α=4, β=3), maka Var(X) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 12</div>
+        <div class="pg-opt" data-val="B">B. 48</div>
+        <div class="pg-opt" data-val="C">C. 36</div>
+        <div class="pg-opt" data-val="D">D. 144</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — Var(X) = α·β² = 4 × 9 = 36</div></div>
+    </div>
+
+    <!-- SOAL 20 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 20 — Distribusi Gamma</div>
+      <div class="pg-q">Distribusi Gamma dengan α=1 ekuivalen dengan...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Distribusi Eksponensial</div>
+        <div class="pg-opt" data-val="B">B. Distribusi Normal</div>
+        <div class="pg-opt" data-val="C">C. Distribusi Binomial</div>
+        <div class="pg-opt" data-val="D">D. Distribusi Poisson</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — Gamma(α=1, β) = Distribusi Eksponensial dengan parameter β.</div></div>
+    </div>
+
+    <!-- SOAL 21 -->
+    <div class="pg-item" data-answer="D">
+      <div class="pg-num">Soal 21 — Distribusi Normal (terapan)</div>
+      <div class="pg-q">X ~ N(μ=100, σ=15). P(X &lt; 115) = ... (diketahui P(Z &lt; 1) = 0,8413)</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 0,1587</div>
+        <div class="pg-opt" data-val="B">B. 0,5000</div>
+        <div class="pg-opt" data-val="C">C. 0,3413</div>
+        <div class="pg-opt" data-val="D">D. 0,8413</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: D — Z = (115−100)/15 = 1. P(X &lt; 115) = P(Z &lt; 1) = 0,8413</div></div>
+    </div>
+
+    <!-- SOAL 22 -->
+    <div class="pg-item" data-answer="B">
+      <div class="pg-num">Soal 22 — Distribusi Frekuensi</div>
+      <div class="pg-q">Tabel distribusi frekuensi kumulatif menunjukkan...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Frekuensi setiap kelas</div>
+        <div class="pg-opt" data-val="B">B. Jumlah observasi yang kurang dari nilai tertentu</div>
+        <div class="pg-opt" data-val="C">C. Persentase tiap kelas</div>
+        <div class="pg-opt" data-val="D">D. Nilai tengah tiap kelas</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: B — Frekuensi kumulatif menunjukkan jumlah observasi yang kurang dari nilai tertentu.</div></div>
+    </div>
+
+    <!-- SOAL 23 -->
+    <div class="pg-item" data-answer="C">
+      <div class="pg-num">Soal 23 — Peluang</div>
+      <div class="pg-q">Sifat Γ(α) = (α−1)·Γ(α−1) disebut sifat...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. Simetri</div>
+        <div class="pg-opt" data-val="B">B. Invers</div>
+        <div class="pg-opt" data-val="C">C. Rekursif</div>
+        <div class="pg-opt" data-val="D">D. Komutatif</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: C — Sifat rekursif: Γ(α) = (α−1)·Γ(α−1), memungkinkan perhitungan berulang ke bawah.</div></div>
+    </div>
+
+    <!-- SOAL 24 -->
+    <div class="pg-item" data-answer="A">
+      <div class="pg-num">Soal 24 — Distribusi Normal</div>
+      <div class="pg-q">Pada distribusi normal baku, P(−1,96 &lt; Z &lt; 1,96) ≈ ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 0,95</div>
+        <div class="pg-opt" data-val="B">B. 0,68</div>
+        <div class="pg-opt" data-val="C">C. 0,997</div>
+        <div class="pg-opt" data-val="D">D. 0,90</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: A — P(−1,96 &lt; Z &lt; 1,96) ≈ 0,95 (95% data). Ini adalah dasar interval kepercayaan 95%.</div></div>
+    </div>
+
+    <!-- SOAL 25 -->
+    <div class="pg-item" data-answer="D">
+      <div class="pg-num">Soal 25 — Gamma</div>
+      <div class="pg-q">Nilai Γ(1/2) = ...</div>
+      <div class="pg-opts">
+        <div class="pg-opt" data-val="A">A. 1</div>
+        <div class="pg-opt" data-val="B">B. 1/2</div>
+        <div class="pg-opt" data-val="C">C. 2</div>
+        <div class="pg-opt" data-val="D">D. √π</div>
+      </div>
+      <button class="check-btn">Cek Jawaban</button>
+      <div class="pg-answer"><div class="pg-answer-inner">✅ Jawaban: D — Γ(1/2) = √π ≈ 1,7725. Ini adalah nilai khusus yang sering muncul di tabel Gamma.</div></div>
+    </div>
+
+  </div><!-- end pg-grid -->
+
+  <!-- SCORE -->
+  <div class="score-section">
+    <h3>Hitung Skor Pilihan Ganda</h3>
+    <p>Klik semua jawaban terlebih dahulu, lalu hitung skor kamu</p>
+    <div class="score-display" id="score-display">—</div>
+    <button class="calc-btn" onclick="calcScore()">Hitung Skor Saya</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     SOAL ESSAY
+═══════════════════════════════════ -->
+<div id="soal-essay">
+  <div class="soal-hero" style="margin-top:40px">
+    <div class="soal-badge">📋</div>
+    <div class="soal-hero-text">
+      <h2>Latihan Soal — Essay</h2>
+      <p>5 soal sesuai kisi-kisi UTS · Klik "Lihat Kunci" untuk panduan jawaban</p>
+    </div>
+  </div>
+
+  <div class="essay-grid">
+
+    <!-- Essay 1 — Statistik -->
+    <div class="essay-item">
+      <div class="essay-header">
+        <div class="essay-num">1</div>
+        <div>
+          <div class="essay-topic">Pengertian Statistik</div>
+        </div>
+      </div>
+      <div class="essay-body">
+        <div class="essay-q">
+          Jelaskan pengertian <strong>Statistika</strong> dan <strong>Statistik</strong>! Apa perbedaan keduanya? Sebutkan juga tiga hal yang sangat penting dalam statistika beserta penjelasannya!
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">👁 Lihat Kunci Jawaban</button>
+        <div class="hidden-answer">
+          <div class="answer-area">
+            <div class="answer-tag">Kunci Jawaban:</div>
+            <p><strong>Statistika</strong> adalah <em>ilmu</em> yang mempelajari cara mengumpulkan, mengolah, menyajikan, menganalisis data, membuat kesimpulan, dan mengambil keputusan berdasarkan hasil analisis tersebut.</p>
+            <p><strong>Statistik</strong> adalah <em>data</em> itu sendiri, informasi, atau hasil penerapan algoritma statistika pada suatu data.</p>
+            <p><strong>Perbedaan:</strong> Statistika = ilmunya; Statistik = datanya/hasilnya.</p>
+            <p><strong>Tiga hal penting dalam Statistika:</strong></p>
+            <p>1. <strong>Data historis</strong> — nilai numerik dari masa lampau yang diolah menjadi informasi untuk pengambilan keputusan di masa depan.</p>
+            <p>2. <strong>Kriteria keputusan</strong> — berbagai pilihan yang memiliki manfaat dan konsekuensi. Statistika membantu menentukan kriteria terbaik dari pilihan-pilihan tersebut.</p>
+            <p>3. <strong>Pengambilan keputusan</strong> — peran utama statistika adalah membantu pengambilan keputusan yang tepat, contoh: penentuan penerimaan siswa berdasarkan nilai UNAS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Essay 2 — Peluang -->
+    <div class="essay-item">
+      <div class="essay-header">
+        <div class="essay-num">2</div>
+        <div>
+          <div class="essay-topic">Peluang / Probabilitas</div>
+        </div>
+      </div>
+      <div class="essay-body">
+        <div class="essay-q">
+          Sebuah kotak berisi 5 bola merah, 3 bola biru, dan 2 bola hijau. Diambil 1 bola secara acak.
+          <br><br>
+          a) Tentukan ruang sampel dan banyaknya anggota ruang sampel n(S)!<br>
+          b) Berapa peluang terambilnya bola merah?<br>
+          c) Berapa peluang terambilnya bola bukan hijau?<br>
+          d) Jika diambil 2 bola secara berurutan <strong>tanpa pengembalian</strong>, berapa peluang bola pertama merah DAN bola kedua biru?
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">👁 Lihat Kunci Jawaban</button>
+        <div class="hidden-answer">
+          <div class="answer-area">
+            <div class="answer-tag">Kunci Jawaban:</div>
+            <p><strong>a)</strong> n(S) = 5+3+2 = 10 bola. Ruang sampel S = {M₁, M₂, M₃, M₄, M₅, B₁, B₂, B₃, H₁, H₂}</p>
+            <p><strong>b)</strong> K = {bola merah}, n(K) = 5<br>P(merah) = n(K)/n(S) = 5/10 = <strong>1/2 = 0,5</strong></p>
+            <p><strong>c)</strong> Bukan hijau = merah + biru = 5+3 = 8 bola<br>P(bukan hijau) = 8/10 = <strong>4/5 = 0,8</strong></p>
+            <p><strong>d)</strong> Tanpa pengembalian → gunakan aturan perkalian (peluang bersyarat):<br>
+            P(pertama merah) = 5/10 = 1/2<br>
+            P(kedua biru | pertama merah) = 3/9 = 1/3 (tersisa 9 bola)<br>
+            P(merah, lalu biru) = (5/10) × (3/9) = 15/90 = <strong>1/6 ≈ 0,167</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Essay 3 — Distribusi Normal 1 -->
+    <div class="essay-item">
+      <div class="essay-header">
+        <div class="essay-num">3</div>
+        <div>
+          <div class="essay-topic">Distribusi Normal — Tabel Z (1)</div>
+        </div>
+      </div>
+      <div class="essay-body">
+        <div class="essay-q">
+          Nilai ujian mahasiswa Teknik Informatika terdistribusi normal dengan rata-rata μ = 72 dan simpangan baku σ = 8.
+          <br><br>
+          a) Hitunglah P(X &lt; 80)!<br>
+          b) Hitunglah P(X &gt; 60)!<br>
+          c) Hitunglah P(64 &lt; X &lt; 88)!<br>
+          d) Berapa nilai minimum seorang mahasiswa agar termasuk 10% terbaik (P(X &gt; x) = 0,10)?
+          <br><br>
+          <em>Gunakan: P(Z &lt; 1,00)=0,8413; P(Z &lt; 1,50)=0,9332; P(Z &lt; 2,00)=0,9772; P(Z &lt; 1,28)=0,8997; P(Z &lt; −1,50)=0,0668; P(Z &lt; −1,00)=0,1587</em>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">👁 Lihat Kunci Jawaban</button>
+        <div class="hidden-answer">
+          <div class="answer-area">
+            <div class="answer-tag">Kunci Jawaban:</div>
+            <p><strong>a) P(X &lt; 80):</strong><br>
+            Z = (80−72)/8 = 8/8 = 1,00<br>
+            P(X &lt; 80) = P(Z &lt; 1,00) = <strong>0,8413</strong></p>
+            <p><strong>b) P(X &gt; 60):</strong><br>
+            Z = (60−72)/8 = −12/8 = −1,50<br>
+            P(X &gt; 60) = 1 − P(Z &lt; −1,50) = 1 − 0,0668 = <strong>0,9332</strong></p>
+            <p><strong>c) P(64 &lt; X &lt; 88):</strong><br>
+            z₁ = (64−72)/8 = −1,00 → P(Z &lt; −1,00) = 0,1587<br>
+            z₂ = (88−72)/8 = 2,00 → P(Z &lt; 2,00) = 0,9772<br>
+            P(64 &lt; X &lt; 88) = 0,9772 − 0,1587 = <strong>0,8185</strong></p>
+            <p><strong>d) 10% terbaik → P(X &gt; x) = 0,10 → P(X &lt; x) = 0,90:</strong><br>
+            Dari tabel, P(Z &lt; 1,28) = 0,8997 ≈ 0,90, jadi z ≈ 1,28<br>
+            x = μ + z·σ = 72 + 1,28×8 = 72 + 10,24 = <strong>82,24</strong><br>
+            Jadi nilai minimum ≈ 82,24 (dibulatkan 83)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Essay 4 — Distribusi Normal 2 -->
+    <div class="essay-item">
+      <div class="essay-header">
+        <div class="essay-num">4</div>
+        <div>
+          <div class="essay-topic">Distribusi Normal — Tabel Z (2)</div>
+        </div>
+      </div>
+      <div class="essay-body">
+        <div class="essay-q">
+          Berat badan mahasiswa PNJ terdistribusi normal dengan μ = 60 kg dan σ = 10 kg.
+          <br><br>
+          a) Berapa persen mahasiswa yang beratnya antara 50 kg dan 75 kg?<br>
+          b) Berapa persen mahasiswa yang beratnya lebih dari 80 kg?<br>
+          c) Jika terdapat 500 mahasiswa, berapa orang yang beratnya kurang dari 45 kg?
+          <br><br>
+          <em>Gunakan: P(Z&lt;−1,00)=0,1587; P(Z&lt;−1,50)=0,0668; P(Z&lt;1,50)=0,9332; P(Z&lt;2,00)=0,9772; P(Z&lt;−2,00)=0,0228</em>
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">👁 Lihat Kunci Jawaban</button>
+        <div class="hidden-answer">
+          <div class="answer-area">
+            <div class="answer-tag">Kunci Jawaban:</div>
+            <p><strong>a) P(50 &lt; X &lt; 75):</strong><br>
+            z₁ = (50−60)/10 = −1,00 → P(Z &lt; −1,00) = 0,1587<br>
+            z₂ = (75−60)/10 = 1,50 → P(Z &lt; 1,50) = 0,9332<br>
+            P(50 &lt; X &lt; 75) = 0,9332 − 0,1587 = <strong>0,7745 = 77,45%</strong></p>
+            <p><strong>b) P(X &gt; 80):</strong><br>
+            Z = (80−60)/10 = 2,00<br>
+            P(X &gt; 80) = 1 − P(Z &lt; 2,00) = 1 − 0,9772 = <strong>0,0228 = 2,28%</strong></p>
+            <p><strong>c) P(X &lt; 45) × 500 orang:</strong><br>
+            Z = (45−60)/10 = −1,50<br>
+            P(X &lt; 45) = P(Z &lt; −1,50) = 0,0668<br>
+            Jumlah mahasiswa = 0,0668 × 500 = <strong>33,4 ≈ 33 orang</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Essay 5 — Distribusi Gamma -->
+    <div class="essay-item">
+      <div class="essay-header">
+        <div class="essay-num">5</div>
+        <div>
+          <div class="essay-topic">Distribusi Gamma — Tabel Gamma</div>
+        </div>
+      </div>
+      <div class="essay-body">
+        <div class="essay-q">
+          Diketahui X adalah variabel acak yang mengikuti distribusi Gamma dengan parameter α = 3 dan β = 2.
+          <br><br>
+          a) Tuliskan fungsi kepadatan probabilitas (PDF) dari X!<br>
+          b) Hitung nilai E(X) dan Var(X)!<br>
+          c) Hitung nilai Γ(4) dan Γ(7) menggunakan sifat fungsi Gamma!<br>
+          d) Jika Y ~ Gamma(α=2, β=1), hitung E(Y²) menggunakan rumus E(Y²) = Var(Y) + [E(Y)]²!
+        </div>
+        <button class="toggle-answer" onclick="toggleAnswer(this)">👁 Lihat Kunci Jawaban</button>
+        <div class="hidden-answer">
+          <div class="answer-area">
+            <div class="answer-tag">Kunci Jawaban:</div>
+            <p><strong>a) PDF X ~ Gamma(α=3, β=2):</strong><br>
+            f(x) = [1/(2³·Γ(3))] · x^(3−1) · e^(−x/2)<br>
+            Γ(3) = 2! = 2; 2³ = 8<br>
+            f(x) = [1/(8·2)] · x² · e^(−x/2) = <strong>x²·e^(−x/2)/16</strong>, untuk x &gt; 0</p>
+            <p><strong>b) E(X) dan Var(X):</strong><br>
+            E(X) = α·β = 3 × 2 = <strong>6</strong><br>
+            Var(X) = α·β² = 3 × 4 = <strong>12</strong></p>
+            <p><strong>c) Γ(4) dan Γ(7):</strong><br>
+            Γ(4) = (4−1)! = 3! = <strong>6</strong><br>
+            Γ(7) = (7−1)! = 6! = 6×5×4×3×2×1 = <strong>720</strong><br>
+            Atau rekursif: Γ(7) = 6·Γ(6) = 6·5·Γ(5) = 6·5·4·Γ(4) = 6·5·4·6 = 720 ✓</p>
+            <p><strong>d) Y ~ Gamma(α=2, β=1):</strong><br>
+            E(Y) = α·β = 2·1 = 2<br>
+            Var(Y) = α·β² = 2·1 = 2<br>
+            E(Y²) = Var(Y) + [E(Y)]² = 2 + 2² = 2 + 4 = <strong>6</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end essay-grid -->
+</div>
+
+</div><!-- end wrap -->
+
+<footer>
+  <p><strong>Modul UTS Probabilitas &amp; Statistika</strong> — Dibuat berdasarkan Buku Ajar TIK 2020, Politeknik Negeri Jakarta</p>
+  <p style="margin-top:6px">Selamat belajar! UTS: Selasa 14 April 2026, 13:00–14:30, Perpustakaan Lt. 8 🎯</p>
+</footer>
+
+<script>
+// PG — pilih opsi
+document.querySelectorAll('.pg-opt').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const item = this.closest('.pg-item');
+    item.querySelectorAll('.pg-opt').forEach(o => o.classList.remove('selected'));
+    this.classList.add('selected');
+  });
+});
+
+// PG — cek jawaban
+document.querySelectorAll('.check-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const item = this.closest('.pg-item');
+    const correct = item.dataset.answer;
+    const selected = item.querySelector('.pg-opt.selected');
+    const answerDiv = item.querySelector('.pg-answer');
+
+    item.querySelectorAll('.pg-opt').forEach(opt => {
+      opt.classList.remove('correct', 'wrong');
+      if (opt.dataset.val === correct) opt.classList.add('correct');
+      else if (opt.classList.contains('selected')) opt.classList.add('wrong');
+    });
+
+    answerDiv.classList.add('show');
+    this.disabled = true;
+    this.style.opacity = '0.5';
+  });
+});
+
+// Score calculator
+function calcScore() {
+  const items = document.querySelectorAll('.pg-item');
+  let correct = 0, answered = 0;
+  items.forEach(item => {
+    const ans = item.dataset.answer;
+    const sel = item.querySelector('.pg-opt.selected');
+    if (sel) {
+      answered++;
+      if (sel.dataset.val === ans) correct++;
+    }
+  });
+  const pct = answered > 0 ? Math.round((correct/25)*100) : 0;
+  const display = document.getElementById('score-display');
+  display.textContent = correct + '/25 = ' + pct + '%';
+  display.style.color = pct >= 80 ? '#52c41a' : pct >= 60 ? '#faad14' : '#d4380d';
+}
+
+// Essay toggle
+function toggleAnswer(btn) {
+  const hidden = btn.nextElementSibling;
+  if (hidden.classList.contains('visible')) {
+    hidden.classList.remove('visible');
+    btn.textContent = '👁 Lihat Kunci Jawaban';
+  } else {
+    hidden.classList.add('visible');
+    btn.textContent = '🙈 Sembunyikan';
+  }
+}
+</script>
+</body>
+</html>
