@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rangkuman Probabilitas & Statistika — TIK 2020</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #1e2d45;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #8b5cf6;
+    --green: #10b981;
+    --yellow: #f59e0b;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --card-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f172a 40%, #1a1035 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(59,130,246,0.12);
+    border: 1px solid rgba(59,130,246,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #93c5fd 50%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 32px;
+  }
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* NAV */
+  .toc {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .toc-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .toc-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-item:hover {
+    border-color: var(--accent);
+    background: rgba(59,130,246,0.08);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .toc-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 24px;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* BAB CARD */
+  .bab {
+    margin-bottom: 40px;
+    scroll-margin-top: 24px;
+  }
+  .bab-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    border-bottom: none;
+    position: relative;
+    overflow: hidden;
+  }
+  .bab-header::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
+  }
+  .bab-1 .bab-header::before { background: #3b82f6; }
+  .bab-2 .bab-header::before { background: #10b981; }
+  .bab-3 .bab-header::before { background: #f59e0b; }
+  .bab-4 .bab-header::before { background: #8b5cf6; }
+  .bab-5 .bab-header::before { background: #ef4444; }
+  .bab-6 .bab-header::before { background: #06b6d4; }
+  .bab-7 .bab-header::before { background: #f97316; }
+  .bab-8 .bab-header::before { background: #84cc16; }
+  .bab-9 .bab-header::before { background: #ec4899; }
+  .bab-10 .bab-header::before { background: #a78bfa; }
+
+  .bab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 3px;
+  }
+  .bab-1 .bab-num { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .bab-2 .bab-num { background: rgba(16,185,129,0.15); color: #10b981; }
+  .bab-3 .bab-num { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .bab-4 .bab-num { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+  .bab-5 .bab-num { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .bab-6 .bab-num { background: rgba(6,182,212,0.15); color: #06b6d4; }
+  .bab-7 .bab-num { background: rgba(249,115,22,0.15); color: #f97316; }
+  .bab-8 .bab-num { background: rgba(132,204,22,0.15); color: #84cc16; }
+  .bab-9 .bab-num { background: rgba(236,72,153,0.15); color: #ec4899; }
+  .bab-10 .bab-num { background: rgba(167,139,250,0.15); color: #a78bfa; }
+
+  .bab-title-wrap h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .bab-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .topic-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .bab-body {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0 0 16px 16px;
+    padding: 24px;
+  }
+
+  /* Sections inside BAB */
+  .section {
+    margin-bottom: 24px;
+  }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  p {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+    line-height: 1.8;
+  }
+
+  /* Info boxes */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .info-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .info-card .ic-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .info-card .ic-value {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* Formula box */
+  .formula-box {
+    background: #0d1528;
+    border: 1px solid #1e3a5f;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .formula-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+  }
+  .formula-box .formula {
+    font-size: 15px;
+    color: #93c5fd;
+    font-weight: 600;
+  }
+  .formula-box .formula-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-family: 'Sora', sans-serif;
+  }
+
+  /* List */
+  ul.bab-list, ol.bab-list {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+  ul.bab-list li, ol.bab-list li {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+    line-height: 1.7;
+  }
+  ul.bab-list li::marker { color: var(--accent); }
+  ol.bab-list li::marker { color: var(--accent); font-weight: 600; }
+
+  /* Key concept highlight */
+  .key-concept {
+    background: rgba(59,130,246,0.07);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #bfdbfe;
+    line-height: 1.7;
+  }
+
+  .highlight-green {
+    background: rgba(16,185,129,0.07);
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #a7f3d0;
+    line-height: 1.7;
+  }
+
+  .highlight-yellow {
+    background: rgba(245,158,11,0.07);
+    border-left: 3px solid var(--yellow);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #fde68a;
+    line-height: 1.7;
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .mini-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .mini-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .mini-card p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* Table */
+  .bab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .bab-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .bab-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: #cbd5e1;
+    background: var(--surface2);
+  }
+  .bab-table tr:last-child td { border-bottom: none; }
+  .bab-table tr:hover td { background: rgba(59,130,246,0.05); }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  strong { color: var(--text); font-weight: 600; }
+  em { color: #93c5fd; font-style: normal; font-weight: 600; }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Rangkuman Materi</div>
+  <h1>Probabilitas & Statistika</h1>
+  <p class="hero-sub">Buku Ajar TIK 2020 — MKD, HM, EO &nbsp;|&nbsp; Politeknik Negeri Jakarta</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">10</span><span class="label">Bab</span></div>
+    <div class="hero-stat"><span class="num">152</span><span class="label">Halaman</span></div>
+    <div class="hero-stat"><span class="num">40+</span><span class="label">Topik</span></div>
+    <div class="hero-stat"><span class="num">R</span><span class="label">Praktikum</span></div>
+  </div>
+</header>
+
+<!-- TABLE OF CONTENTS -->
+<nav class="toc">
+  <div class="toc-title">Daftar Bab</div>
+  <div class="toc-grid">
+    <a href="#bab1" class="toc-item"><span class="toc-num">01</span>Konsep Dasar Statistik</a>
+    <a href="#bab2" class="toc-item"><span class="toc-num">02</span>Deskriptif Statistik</a>
+    <a href="#bab3" class="toc-item"><span class="toc-num">03</span>Peluang</a>
+    <a href="#bab4" class="toc-item"><span class="toc-num">04</span>Distribusi Diskrit</a>
+    <a href="#bab5" class="toc-item"><span class="toc-num">05</span>Distribusi Kontinu</a>
+    <a href="#bab6" class="toc-item"><span class="toc-num">06</span>Distribusi Sampel</a>
+    <a href="#bab7" class="toc-item"><span class="toc-num">07</span>Pengujian Hipotesis</a>
+    <a href="#bab8" class="toc-item"><span class="toc-num">08</span>Distribusi Chi-Square</a>
+    <a href="#bab9" class="toc-item"><span class="toc-num">09</span>Statistik Parametrik</a>
+    <a href="#bab10" class="toc-item"><span class="toc-num">10</span>Statistik Non-Parametrik</a>
+  </div>
+</nav>
+
+<!-- CONTENT -->
+<main class="content">
+
+  <!-- BAB 1 -->
+  <div class="bab bab-1" id="bab1">
+    <div class="bab-header">
+      <span class="bab-num">Bab 01</span>
+      <div class="bab-title-wrap">
+        <h2>Konsep Dasar Statistik</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Pengertian Statistik</span>
+          <span class="topic-tag">Jenis Variabel & Data</span>
+          <span class="topic-tag">Skala Pengukuran</span>
+          <span class="topic-tag">Pengenalan R</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Pengertian Statistika</div>
+        <div class="key-concept">
+          <strong>Statistika</strong> adalah ilmu yang mempelajari cara mengumpulkan, mengolah, menyajikan, menganalisis data, serta menarik kesimpulan dan mengambil keputusan berdasarkan data tersebut.
+        </div>
+        <p>Ada tiga hal penting dalam statistika: (1) <strong>Data historis</strong> — nilai numerik masa lampau yang diolah menjadi informasi, (2) <strong>Kriteria keputusan</strong> — pilihan-pilihan yang memiliki manfaat dan konsekuensi, (3) <strong>Pengambilan keputusan</strong> — penerapan statistik secara nyata, misalnya dalam pendidikan dan bisnis.</p>
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Statistika Deskriptif</h4>
+            <p>Mendeskripsikan dan merangkum data yang ada tanpa membuat kesimpulan untuk populasi yang lebih besar.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Statistika Inferensial</h4>
+            <p>Menarik kesimpulan dan membuat prediksi tentang populasi berdasarkan data sampel yang diambil.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Jenis Variabel & Data</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Variabel Kuantitatif</div>
+            <div class="ic-value">Data berupa angka yang dapat dihitung/diukur. Contoh: berat badan, nilai ujian.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Variabel Kualitatif</div>
+            <div class="ic-value">Data berupa kategori atau atribut. Contoh: jenis kelamin, warna, status.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Data Diskrit</div>
+            <div class="ic-value">Nilai tertentu dan tidak dapat dibagi. Contoh: jumlah mahasiswa, jumlah mobil.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Data Kontinu</div>
+            <div class="ic-value">Dapat mengambil nilai berapa saja dalam suatu rentang. Contoh: tinggi badan, suhu.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Skala Pengukuran Data</div>
+        <table class="bab-table">
+          <thead>
+            <tr><th>Skala</th><th>Karakteristik</th><th>Contoh</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Nominal</strong></td><td>Hanya membedakan kategori, tidak ada urutan</td><td>Jenis kelamin, agama, kode pos</td></tr>
+            <tr><td><strong>Ordinal</strong></td><td>Ada urutan/peringkat, tapi jarak tidak sama</td><td>Peringkat kelas, tingkat kepuasan</td></tr>
+            <tr><td><strong>Interval</strong></td><td>Ada urutan & jarak sama, tidak ada nol mutlak</td><td>Suhu (°C), tahun kalender</td></tr>
+            <tr><td><strong>Rasio</strong></td><td>Ada nol mutlak, semua operasi matematika berlaku</td><td>Berat badan, tinggi, pendapatan</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 2 -->
+  <div class="bab bab-2" id="bab2">
+    <div class="bab-header">
+      <span class="bab-num">Bab 02</span>
+      <div class="bab-title-wrap">
+        <h2>Deskriptif Statistik</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Distribusi Frekuensi</span>
+          <span class="topic-tag">Pemusatan Data</span>
+          <span class="topic-tag">Ukuran Letak</span>
+          <span class="topic-tag">Grafik</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Distribusi Frekuensi</div>
+        <p>Penyajian data dalam bentuk tabel yang mengelompokkan data ke dalam kelas-kelas tertentu beserta frekuensinya. Ada dua jenis: <strong>distribusi frekuensi tunggal</strong> (data tidak dikelompokkan) dan <strong>distribusi frekuensi berkelompok</strong> (data dikelompokkan dalam kelas interval).</p>
+        <div class="formula-box">
+          <div class="formula-label">Rumus Panjang/Interval Kelas</div>
+          <div class="formula">I = (Data max − Data min) / Banyak kelas</div>
+          <div class="formula-desc">Banyak kelas ≈ 1 + 3.3 log(n)  — Rumus Sturges</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ukuran Pemusatan Data</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Mean (Rata-rata)</div>
+            <div class="ic-value">Jumlah semua nilai dibagi banyaknya data. Sensitif terhadap nilai ekstrem (outlier).</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Median</div>
+            <div class="ic-value">Nilai tengah data yang telah diurutkan. Tidak terpengaruh outlier.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Modus</div>
+            <div class="ic-value">Nilai yang paling sering muncul dalam data. Bisa lebih dari satu modus.</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="formula-box">
+            <div class="formula-label">Mean Data Berkelompok (Sigma)</div>
+            <div class="formula">x̄ = Σ(fᵢ · xᵢ) / Σfᵢ</div>
+            <div class="formula-desc">xᵢ = titik tengah kelas</div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-label">Mean Data Berkelompok (Coding)</div>
+            <div class="formula">x̄ = x₀ + (Σfᵢcᵢ / n) · I</div>
+            <div class="formula-desc">x₀ = titik tengah frekuensi terbesar</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ukuran Letak (Kuartil, Desil, Persentil)</div>
+        <div class="highlight-green">
+          <strong>Kuartil</strong> membagi data menjadi 4 bagian sama besar (Q1, Q2, Q3). <strong>Desil</strong> membagi menjadi 10 bagian. <strong>Persentil</strong> membagi menjadi 100 bagian. Semua dihitung setelah data diurutkan.
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Kuartil Data Berkelompok</div>
+          <div class="formula">Qᵢ = L + [(i·n/4 − F) / fᵢ] · I</div>
+          <div class="formula-desc">L = tepi bawah kelas kuartil, F = frekuensi kumulatif sebelumnya, fᵢ = frekuensi kelas kuartil</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Ukuran Dispersi (Penyebaran)</div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Range / Jangkauan</div>
+            <div class="ic-value">Selisih antara nilai maksimum dan minimum. R = X_max − X_min</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Varians (s²)</div>
+            <div class="ic-value">Rata-rata kuadrat simpangan dari mean. Menggunakan s² = Σ(xᵢ−x̄)² / (n−1)</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Simpangan Baku (s)</div>
+            <div class="ic-value">Akar kuadrat dari varians. Lebih mudah diinterpretasikan karena satuan sama dengan data.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Koefisien Variasi</div>
+            <div class="ic-value">CV = (s / x̄) × 100%. Mengukur variabilitas relatif antar kelompok data berbeda satuan.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Grafik & Visualisasi Data</div>
+        <ul class="bab-list">
+          <li><strong>Histogram</strong> — grafik batang untuk distribusi frekuensi berkelompok.</li>
+          <li><strong>Poligon Frekuensi</strong> — titik tengah kelas dihubungkan dengan garis.</li>
+          <li><strong>Ogif</strong> — grafik frekuensi kumulatif (naik atau turun).</li>
+          <li><strong>Pie Chart</strong> — menampilkan proporsi/persentase setiap kategori.</li>
+          <li><strong>Box Plot</strong> — memperlihatkan sebaran data melalui Q1, Q2, Q3, dan outlier.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 3 -->
+  <div class="bab bab-3" id="bab3">
+    <div class="bab-header">
+      <span class="bab-num">Bab 03</span>
+      <div class="bab-title-wrap">
+        <h2>Peluang</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Konsep Dasar Peluang</span>
+          <span class="topic-tag">Peluang Bersyarat</span>
+          <span class="topic-tag">Teorema Bayes</span>
+          <span class="topic-tag">Permutasi & Kombinasi</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Konsep Dasar</div>
+        <div class="key-concept">
+          <strong>Peluang (Probabilitas)</strong> adalah ukuran kemungkinan terjadinya suatu kejadian, bernilai antara 0 (mustahil) hingga 1 (pasti terjadi). P(A) = n(A) / n(S), di mana n(S) adalah banyaknya anggota ruang sampel.
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Ruang Sampel (S)</div>
+            <div class="ic-value">Himpunan semua kemungkinan hasil dari suatu percobaan.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Kejadian (Event)</div>
+            <div class="ic-value">Himpunan bagian dari ruang sampel yang diperhatikan.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Kejadian Saling Lepas</div>
+            <div class="ic-value">Dua kejadian yang tidak dapat terjadi bersamaan: P(A∩B) = 0.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Kejadian Bebas</div>
+            <div class="ic-value">Kejadian A tidak mempengaruhi B: P(A∩B) = P(A)·P(B).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Aturan Peluang</div>
+        <div class="two-col">
+          <div class="formula-box">
+            <div class="formula-label">Aturan Penjumlahan</div>
+            <div class="formula">P(A∪B) = P(A) + P(B) − P(A∩B)</div>
+            <div class="formula-desc">Jika saling lepas: P(A∪B) = P(A) + P(B)</div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-label">Aturan Perkalian</div>
+            <div class="formula">P(A∩B) = P(A) · P(B|A)</div>
+            <div class="formula-desc">Jika bebas: P(A∩B) = P(A) · P(B)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Peluang Bersyarat & Teorema Bayes</div>
+        <div class="formula-box">
+          <div class="formula-label">Peluang Bersyarat</div>
+          <div class="formula">P(B|A) = P(A∩B) / P(A)</div>
+          <div class="formula-desc">Peluang B terjadi, diketahui A sudah terjadi.</div>
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Teorema Bayes</div>
+          <div class="formula">P(Aᵢ|B) = [P(Aᵢ) · P(B|Aᵢ)] / Σ[P(Aⱼ) · P(B|Aⱼ)]</div>
+          <div class="formula-desc">Memperbarui probabilitas hipotesis berdasarkan bukti baru.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Permutasi & Kombinasi</div>
+        <div class="two-col">
+          <div class="formula-box">
+            <div class="formula-label">Permutasi (urutan penting)</div>
+            <div class="formula">P(n,r) = n! / (n−r)!</div>
+            <div class="formula-desc">Menyusun r objek dari n objek berbeda dengan memperhatikan urutan.</div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-label">Kombinasi (urutan tidak penting)</div>
+            <div class="formula">C(n,r) = n! / [r! · (n−r)!]</div>
+            <div class="formula-desc">Memilih r objek dari n objek tanpa memperhatikan urutan.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 4 -->
+  <div class="bab bab-4" id="bab4">
+    <div class="bab-header">
+      <span class="bab-num">Bab 04</span>
+      <div class="bab-title-wrap">
+        <h2>Distribusi Diskrit</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Distribusi Peluang</span>
+          <span class="topic-tag">Variabel Acak Diskrit</span>
+          <span class="topic-tag">Distribusi Binomial</span>
+          <span class="topic-tag">Distribusi Poisson</span>
+          <span class="topic-tag">Distribusi Hipergeometrik</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Variabel Acak Diskrit</div>
+        <div class="key-concept">
+          <strong>Variabel Acak Diskrit</strong> adalah variabel yang hanya dapat mengambil nilai-nilai tertentu (biasanya bilangan bulat). Distribusi probabilitasnya memenuhi: setiap P(x) berada antara 0 dan 1, dan Σ P(x) = 1.
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Nilai Ekspektasi & Varians</div>
+          <div class="formula">E(X) = Σ x · P(x)&nbsp;&nbsp;&nbsp;&nbsp;Var(X) = Σ x² · P(x) − [E(X)]²</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribusi Binomial</div>
+        <div class="highlight-yellow">
+          Digunakan ketika percobaan dilakukan <strong>n kali secara independen</strong>, setiap percobaan hanya menghasilkan <strong>sukses (p)</strong> atau <strong>gagal (1−p)</strong>, dan p konstan di setiap percobaan.
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Fungsi Massa Peluang Binomial</div>
+          <div class="formula">P(X=x) = C(n,x) · pˣ · (1−p)ⁿ⁻ˣ</div>
+          <div class="formula-desc">μ = np &nbsp;|&nbsp; σ² = np(1−p) &nbsp;|&nbsp; x = 0, 1, 2, ..., n</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribusi Poisson</div>
+        <div class="highlight-green">
+          Digunakan untuk menghitung frekuensi kejadian dalam <strong>interval waktu atau ruang tertentu</strong>, saat kejadian bersifat acak dan rata-rata kejadian (λ) diketahui.
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Fungsi Massa Peluang Poisson</div>
+          <div class="formula">P(X=x) = (e⁻λ · λˣ) / x!</div>
+          <div class="formula-desc">λ = rata-rata kejadian &nbsp;|&nbsp; E(X) = Var(X) = λ &nbsp;|&nbsp; e ≈ 2.71828</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribusi Hipergeometrik</div>
+        <p>Digunakan saat pengambilan sampel <strong>tanpa pengembalian</strong> dari populasi terbatas yang terdiri atas dua kelompok (K sukses dan N−K gagal).</p>
+        <div class="formula-box">
+          <div class="formula-label">Fungsi Massa Peluang Hipergeometrik</div>
+          <div class="formula">P(X=x) = C(K,x) · C(N−K, n−x) / C(N,n)</div>
+          <div class="formula-desc">N = ukuran populasi, K = jumlah sukses di populasi, n = ukuran sampel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 5 -->
+  <div class="bab bab-5" id="bab5">
+    <div class="bab-header">
+      <span class="bab-num">Bab 05</span>
+      <div class="bab-title-wrap">
+        <h2>Distribusi Kontinu</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Variabel Random Kontinu</span>
+          <span class="topic-tag">Distribusi Normal</span>
+          <span class="topic-tag">Distribusi Normal Baku</span>
+          <span class="topic-tag">Aproksimasi Normal-Binomial</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Distribusi Normal</div>
+        <div class="key-concept">
+          <strong>Distribusi Normal (Gaussian)</strong> adalah distribusi yang paling penting dalam statistika, berbentuk kurva lonceng (bell curve), simetris terhadap mean μ. Sepenuhnya ditentukan oleh dua parameter: μ (mean) dan σ (simpangan baku).
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Ciri Kurva Normal</div>
+            <div class="ic-value">Simetris terhadap mean. Kedua ekor mendekati tapi tidak menyentuh sumbu-x. Luas total = 1.</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Aturan Empiris (68-95-99.7)</div>
+            <div class="ic-value">68% data dalam μ±σ, 95% dalam μ±2σ, 99.7% dalam μ±3σ.</div>
+          </div>
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Standardisasi ke Distribusi Normal Baku (Z)</div>
+          <div class="formula">Z = (X − μ) / σ</div>
+          <div class="formula-desc">Z ~ N(0, 1) — mean = 0, simpangan baku = 1. Nilai Z dicari di tabel Z.</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Aproksimasi Normal terhadap Binomial</div>
+        <div class="highlight-yellow">
+          Bila n besar (n ≥ 30) dan np ≥ 5 serta n(1−p) ≥ 5, distribusi Binomial dapat diaproksimasi dengan Distribusi Normal menggunakan <strong>koreksi kontinyuitas ±0.5</strong>.
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Parameter Aproksimasi</div>
+          <div class="formula">μ = np &nbsp;&nbsp;&nbsp;&nbsp; σ = √[np(1−p)]</div>
+          <div class="formula-desc">Lalu gunakan Z = (X ± 0.5 − μ) / σ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 6 -->
+  <div class="bab bab-6" id="bab6">
+    <div class="bab-header">
+      <span class="bab-num">Bab 06</span>
+      <div class="bab-title-wrap">
+        <h2>Distribusi Sampel</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Distribusi Rataan Sampel</span>
+          <span class="topic-tag">Distribusi Proporsi Sampel</span>
+          <span class="topic-tag">Teorema Limit Pusat</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Konsep Distribusi Sampling</div>
+        <div class="key-concept">
+          <strong>Distribusi Sampling</strong> adalah distribusi dari suatu statistik (seperti rata-rata atau proporsi) yang dihitung dari semua sampel berukuran n yang mungkin diambil dari populasi.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribusi Rataan Sampel</div>
+        <div class="formula-box">
+          <div class="formula-label">Sifat Rataan Sampel</div>
+          <div class="formula">μ(x̄) = μ &nbsp;&nbsp;&nbsp;&nbsp; σ(x̄) = σ / √n</div>
+          <div class="formula-desc">σ(x̄) disebut "standard error" — mengukur variabilitas rata-rata sampel.</div>
+        </div>
+        <div class="highlight-green">
+          <strong>Teorema Limit Pusat (Central Limit Theorem):</strong> Untuk sampel berukuran besar (n ≥ 30), distribusi rata-rata sampel mendekati distribusi normal, terlepas dari bentuk distribusi populasi asal.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Distribusi Proporsi Sampel</div>
+        <div class="formula-box">
+          <div class="formula-label">Sifat Proporsi Sampel (p̂)</div>
+          <div class="formula">μ(p̂) = p &nbsp;&nbsp;&nbsp;&nbsp; σ(p̂) = √[p(1−p)/n]</div>
+          <div class="formula-desc">Berlaku normal bila np ≥ 5 dan n(1−p) ≥ 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 7 -->
+  <div class="bab bab-7" id="bab7">
+    <div class="bab-header">
+      <span class="bab-num">Bab 07</span>
+      <div class="bab-title-wrap">
+        <h2>Pengujian Hipotesis</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">H₀ & H₁</span>
+          <span class="topic-tag">Uji T</span>
+          <span class="topic-tag">Uji Z</span>
+          <span class="topic-tag">Galat Tipe I & II</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Hipotesis Statistik</div>
+        <div class="key-concept">
+          <strong>Hipotesis Nol (H₀)</strong>: pernyataan yang diasumsikan benar sampai terbukti sebaliknya (ditulis dalam bentuk persamaan =). <strong>Hipotesis Alternatif (H₁)</strong>: pernyataan lawan yang ingin dibuktikan (ditulis dengan &lt;, &gt;, atau ≠).
+        </div>
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Galat Tipe I (α)</h4>
+            <p>Menolak H₀ padahal H₀ benar. α = tingkat signifikansi (biasanya 0.05 atau 0.01).</p>
+          </div>
+          <div class="mini-card">
+            <h4>Galat Tipe II (β)</h4>
+            <p>Menerima H₀ padahal H₀ salah. Power uji = 1 − β.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Uji Z & Uji T</div>
+        <table class="bab-table">
+          <thead>
+            <tr><th>Aspek</th><th>Uji Z</th><th>Uji T</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Digunakan saat</strong></td><td>n ≥ 30 atau σ populasi diketahui</td><td>n &lt; 30 dan σ populasi tidak diketahui</td></tr>
+            <tr><td><strong>Distribusi</strong></td><td>Normal baku Z ~ N(0,1)</td><td>t-Student dengan df = n−1</td></tr>
+            <tr><td><strong>Statistik uji</strong></td><td>Z = (x̄ − μ₀) / (σ/√n)</td><td>t = (x̄ − μ₀) / (s/√n)</td></tr>
+            <tr><td><strong>Tabel kritis</strong></td><td>Tabel Z</td><td>Tabel t (berdasarkan df)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Langkah Pengujian Hipotesis</div>
+        <ol class="bab-list">
+          <li>Tentukan H₀ dan H₁ serta arah uji (satu atau dua arah).</li>
+          <li>Tentukan tingkat signifikansi α (umumnya 0.05).</li>
+          <li>Pilih statistik uji yang sesuai (Z atau t).</li>
+          <li>Hitung nilai statistik uji dari data sampel.</li>
+          <li>Tentukan daerah kritis atau hitung p-value.</li>
+          <li>Ambil keputusan: tolak H₀ jika nilai uji jatuh di daerah kritis.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 8 -->
+  <div class="bab bab-8" id="bab8">
+    <div class="bab-header">
+      <span class="bab-num">Bab 08</span>
+      <div class="bab-title-wrap">
+        <h2>Distribusi Chi-Square</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Distribusi Chi-Square</span>
+          <span class="topic-tag">Goodness-of-Fit Test</span>
+          <span class="topic-tag">Independence Test</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Uji Chi-Square</div>
+        <div class="key-concept">
+          <strong>Uji Chi-Square (χ²)</strong> adalah uji non-parametrik yang membandingkan frekuensi observasi dengan frekuensi harapan. Berguna untuk data kategorik (nominal/ordinal).
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Statistik Uji Chi-Square</div>
+          <div class="formula">χ² = Σ [(Oᵢ − Eᵢ)² / Eᵢ]</div>
+          <div class="formula-desc">Oᵢ = frekuensi observasi &nbsp;|&nbsp; Eᵢ = frekuensi harapan</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Jenis Uji Chi-Square</div>
+        <div class="two-col">
+          <div class="mini-card">
+            <h4>Goodness-of-Fit Test</h4>
+            <p>Menguji apakah distribusi data sampel sesuai dengan distribusi teoritis yang diharapkan. df = k − 1 (k = banyak kategori).</p>
+          </div>
+          <div class="mini-card">
+            <h4>Independence Test</h4>
+            <p>Menguji apakah dua variabel kategorik saling bebas (independen). df = (r−1)(c−1). Menggunakan tabel kontingensi.</p>
+          </div>
+        </div>
+        <div class="highlight-yellow">
+          <strong>Syarat:</strong> Frekuensi harapan (E) di setiap sel minimal 5. Jika ada sel dengan E &lt; 5, gabungkan kategori yang berdekatan.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 9 -->
+  <div class="bab bab-9" id="bab9">
+    <div class="bab-header">
+      <span class="bab-num">Bab 09</span>
+      <div class="bab-title-wrap">
+        <h2>Statistik Parametrik</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">ANOVA</span>
+          <span class="topic-tag">Korelasi Pearson</span>
+          <span class="topic-tag">Regresi Sederhana</span>
+          <span class="topic-tag">Regresi Berganda</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">ANOVA (Analysis of Variance)</div>
+        <div class="key-concept">
+          <strong>ANOVA</strong> digunakan untuk menguji apakah rata-rata dari <strong>tiga atau lebih kelompok</strong> secara statistik berbeda. Menggunakan distribusi F. H₀: μ₁ = μ₂ = μ₃ (semua rata-rata sama).
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Statistik Uji F</div>
+          <div class="formula">F = MSB / MSW = (SSB/dfB) / (SSW/dfW)</div>
+          <div class="formula-desc">SSB = Sum of Squares Between, SSW = Sum of Squares Within</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Korelasi Pearson</div>
+        <div class="highlight-green">
+          Mengukur kekuatan dan arah <strong>hubungan linier</strong> antara dua variabel kontinu. Nilai r berkisar antara −1 (korelasi negatif sempurna) hingga +1 (korelasi positif sempurna).
+        </div>
+        <div class="formula-box">
+          <div class="formula-label">Koefisien Korelasi Pearson (r)</div>
+          <div class="formula">r = Σ[(xᵢ−x̄)(yᵢ−ȳ)] / √[Σ(xᵢ−x̄)² · Σ(yᵢ−ȳ)²]</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Regresi Linear</div>
+        <div class="two-col">
+          <div class="formula-box">
+            <div class="formula-label">Regresi Sederhana</div>
+            <div class="formula">Ŷ = a + bX</div>
+            <div class="formula-desc">b = r·(sY/sX), a = ȳ − b·x̄</div>
+          </div>
+          <div class="formula-box">
+            <div class="formula-label">Regresi Berganda</div>
+            <div class="formula">Ŷ = a + b₁X₁ + b₂X₂ + ... + bₖXₖ</div>
+            <div class="formula-desc">Diselesaikan dengan metode matriks/OLS</div>
+          </div>
+        </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="ic-label">Koefisien Determinasi R²</div>
+            <div class="ic-value">Proporsi variasi Y yang dijelaskan oleh model regresi. R² = 0 (tidak ada hubungan) hingga 1 (sempurna).</div>
+          </div>
+          <div class="info-card">
+            <div class="ic-label">Asumsi Regresi</div>
+            <div class="ic-value">Linieritas, normalitas residual, homoskedastisitas, tidak ada multikolinieritas (regresi berganda).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAB 10 -->
+  <div class="bab bab-10" id="bab10">
+    <div class="bab-header">
+      <span class="bab-num">Bab 10</span>
+      <div class="bab-title-wrap">
+        <h2>Statistik Non-Parametrik</h2>
+        <div class="bab-topics">
+          <span class="topic-tag">Kruskal-Wallis</span>
+          <span class="topic-tag">Korelasi Spearman & Kendall</span>
+          <span class="topic-tag">Mann-Whitney</span>
+          <span class="topic-tag">Praktikum R</span>
+        </div>
+      </div>
+    </div>
+    <div class="bab-body">
+      <div class="section">
+        <div class="section-title">Kapan Menggunakan Non-Parametrik?</div>
+        <div class="key-concept">
+          Uji non-parametrik digunakan ketika <strong>asumsi distribusi normal tidak terpenuhi</strong>, data berskala ordinal, atau ukuran sampel sangat kecil. Tidak memerlukan asumsi tentang bentuk distribusi populasi.
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Uji-Uji Non-Parametrik</div>
+        <table class="bab-table">
+          <thead>
+            <tr><th>Uji</th><th>Padanan Parametrik</th><th>Digunakan Untuk</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Mann-Whitney U</strong></td>
+              <td>Uji-t dua sampel bebas</td>
+              <td>Membandingkan dua kelompok independen (data ordinal/non-normal)</td>
+            </tr>
+            <tr>
+              <td><strong>Kruskal-Wallis H</strong></td>
+              <td>ANOVA satu arah</td>
+              <td>Membandingkan tiga atau lebih kelompok independen</td>
+            </tr>
+            <tr>
+              <td><strong>Korelasi Spearman (rₛ)</strong></td>
+              <td>Korelasi Pearson</td>
+              <td>Hubungan antara dua variabel ordinal atau data yang di-ranking</td>
+            </tr>
+            <tr>
+              <td><strong>Korelasi Kendall (τ)</strong></td>
+              <td>Korelasi Pearson</td>
+              <td>Korelasi berdasarkan konkordansi pasangan data</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Korelasi Spearman</div>
+        <div class="formula-box">
+          <div class="formula-label">Koefisien Korelasi Spearman</div>
+          <div class="formula">rₛ = 1 − [6 · Σd²] / [n(n²−1)]</div>
+          <div class="formula-desc">d = selisih ranking pasangan data, n = banyak pasangan data</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Kruskal-Wallis</div>
+        <div class="formula-box">
+          <div class="formula-label">Statistik Uji Kruskal-Wallis (H)</div>
+          <div class="formula">H = [12 / n(n+1)] · Σ(Rᵢ² / nᵢ) − 3(n+1)</div>
+          <div class="formula-desc">Rᵢ = jumlah ranking kelompok ke-i, nᵢ = ukuran sampel kelompok ke-i. Distribusi H mendekati χ²(k−1).</div>
+        </div>
+        <div class="highlight-green">
+          Jika n tiap kelompok ≥ 5, statistik H mendekati distribusi <strong>Chi-Square dengan df = k − 1</strong> (k = banyak kelompok), sehingga nilai kritis diambil dari tabel χ².
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Rangkuman Buku Probabilitas &amp; Statistika — TIK 2020 &nbsp;|&nbsp; Politeknik Negeri Jakarta</p>
+  <p style="margin-top:6px; color: #334155;">Dirangkum secara otomatis dari 152 halaman · 10 Bab · Mencakup teori, rumus, dan contoh</p>
+</footer>
+
+</body>
+</html>
